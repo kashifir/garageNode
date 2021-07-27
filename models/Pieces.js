@@ -6,7 +6,7 @@ module.exports = (dbinfo, Sequelize) => {
             // field name
             id: {
                 // set data type
-                type: Sequelize.DataTypes.INTEGER,
+                type: Sequelize.DataTypes.INTEGER(11),
                 // set primaryKey
                 primaryKey: true,
                 // set autoIncrement

@@ -2,7 +2,7 @@
 module.exports = (dbinfo, Sequelize) => {
     return dbinfo.define(
         // table name
-        "reparation_has_piece",
+        "Treparation_has_piece",
         {
             // field name
             quantite:{

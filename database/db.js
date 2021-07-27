@@ -89,6 +89,10 @@ db.atelier = require('../models/Atelier')(dbinfo, Sequelize);
 db.marque = require("../models/Marque")(dbinfo, Sequelize);
 
 db.reparation_has_pieces = require('../models/reparation_has_piece')(dbinfo, Sequelize);
+
+
+
+
 db.fournisser_has_piece = require('../models/fournisser_has_piece')(dbinfo, Sequelize);
 db.typereparation = require('../models/TypeReparation')(dbinfo, Sequelize);
 
@@ -110,6 +114,8 @@ db.typereparation = require('../models/TypeReparation')(dbinfo, Sequelize);
  *  the garage can have Many atelier : atelier: 1,1  garage : 1,N
  */
 db.garage.hasMany(db.atelier,{foreignKey: "garageId"});
+
+db.garage.hasMany(db.emp,{foreignKey: "garageId"});
 
 db.atelier.hasOne(db.emp,{foreignKey: "atelierId"});
 
@@ -140,6 +146,10 @@ db.typereparation.hasOne(db.reparation, {foreignKey: "typereparationId"});
 // many to many 1,N ET 1,N
 db.piece.belongsToMany(db.reparation, { through: 'reparation_has_piece', foreignKey: "pieceId" });
 db.reparation.belongsToMany(db.piece, { through: 'reparation_has_piece', foreignKey: "reparationId" });
+
+
+db.rep = dbinfo.model('reparation_has_piece');
+
 // many to many 1,N ET 1,N
 db.piece.belongsToMany(db.fornissuer, {through: 'fournisser_has_piece', as: 'fornisserhaspieces', foreignKey: "pieceId"});
 db.fornissuer.belongsToMany(db.piece, {through: 'fournisser_has_piece', as: 'fornisserhaspieces',foreignKey: "fornissuerId"});

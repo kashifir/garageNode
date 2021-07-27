@@ -24,14 +24,52 @@ const express = require("express");
  * @type { Router }
  */
 const client = express.Router();
+
 //create db
 const db = require("../database/db");
+
+
+const  Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 /************************************** End Require module ****************************************************
  *****************************************************************************************************************/
 
 /************************************** Start client router ****************************************************
  *****************************************************************************************************************/
+
+client.get("/find/:id/:email",(req,res) =>{
+    db.client.findAll({
+        where: {
+            [Op.or]: [{id:req.params.id},{email:req.params.email}]
+        }
+    })
+        .then(client =>{
+            res.json(client);
+        })
+        .catch(err => {
+            console.log(err);
+            res.json(err);
+        })
+})
+
+client.get("/findlike/:email",(req,res) =>{
+    db.client.findAll({
+        where: {
+            email: {
+                [Op.like]: '%'+req.params.email
+            }
+        }
+    })
+        .then(client =>{
+            res.json(client);
+        })
+        .catch(err => {
+            console.log(err);
+            res.json(err);
+        })
+})
+
 
 
 // get All clients with out voiture
@@ -83,7 +121,7 @@ client.get("/getAll", (req, res) => {
     // get clients
         .then(clients => {
             // send back clients
-            res.json(clients);
+            res.json({clients: clients});
         })
         // if error catch if and send back for user app to show him if some error
         .catch(err => {
@@ -373,6 +411,17 @@ client.delete("/delete/:id", (req, res) => {
             })
         })
 });
+
+
+
+client.get("/findAllcar",(req,res) => {
+    db.client.FindAll().then(car =>{
+        db.voiture.findAll({where:{id:car.id}})
+            .then(datares =>{
+                db.reparation.findAll({where:{id:datares.id}})
+            })
+    })
+})
 
 
 module.exports = client;

@@ -24,6 +24,7 @@ const voiture = require("./router/voiture");
 const emp = require("./router/emp");
 const garage = require("./router/garage");
 const atelier = require("./router/atelier");
+const rep = require("./router/reparation")
 
 // require cors
 
@@ -83,8 +84,9 @@ app.use("/client", client);
 app.use("/pieces", pieces);
 app.use("/voiture", voiture);
 app.use("/emp", emp);
-app.use('/garage', garage)
-app.use('/atelier', atelier)
+app.use('/garage', garage);
+app.use('/atelier', atelier);
+app.use('/rep', rep);
 
 
 // we say our app to start listen in the port and send back to us the msg with port info

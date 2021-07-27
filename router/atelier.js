@@ -45,7 +45,7 @@ atelier.post("/add", (req, res) => {
     // create data atelier
     var ateliers = {
         nom: req.body.nom,
-        garageId: 1
+        garageId: req.body.garageId
     };
     // find if atelier existe  or not
     db.atelier.findOne({
@@ -151,14 +151,13 @@ atelier.delete("/delete/:id", (req,res) =>{
 // find by email atelier
 atelier.get("/Find/:garageId", (req,res) =>{
     // find the atelier by garageId
-    db.atelier.findOne({
+    db.atelier.findAll({
         where:{garageId: req.params.garageId}
     }).then(atelier =>{
         // if pieces exist so
         if(atelier) {
             res.json({
-                atelier: atelier
-            })
+                atelier: atelier})
         }
         else {
             // send back this atelier it not exist in your database
@@ -171,16 +170,14 @@ atelier.get("/Find/:garageId", (req,res) =>{
         })
 });
 
-// find by email atelier
+// find by  atelier
 atelier.get("/FindAll", (req,res) =>{
     // find the atelier by garageId
-    db.atelier.findAll({
-    }).then(atelier =>{
-        // if pieces exist so
+    db.atelier.findAll()
+        .then(atelier =>{
+        // if  exist so
         if(atelier) {
-            res.json({
-                atelier: atelier
-            })
+            res.json({atelier: atelier})
         }
         else {
             // send back this atelier it not exist in your database
